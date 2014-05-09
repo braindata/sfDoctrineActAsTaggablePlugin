@@ -1,0 +1,8 @@
+tag_manager:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                tag
+    module:               tag_manager
+    prefix_path:          /tag_manager
+    column:               id
+    with_wildcard_routes: true
