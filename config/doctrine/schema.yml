@@ -16,6 +16,16 @@ Tag:
       type:           string(100)
     triple_value:
       type:           string(100)
+    description:
+      type:           string(4000)
+    image1:
+      type: string(255)
+    is_featured:
+      type: boolean
+      notnull: true
+      default: false
+    position:
+      type: integer
   indexes:
     name:
       # boutell: this needs to be an array not just a string.
