@@ -9,4 +9,21 @@
  */
 abstract class PluginTagForm extends BaseTagForm
 {
+  public function setup()
+  {
+    parent::setup();
+
+    unset(
+      $this['image1'],
+      $this['is_triple'],
+      $this['triple_namespace'],
+      $this['triple_key'],
+      $this['triple_value']
+    );
+
+    $this->widgetSchema['image1'] = new sfImageManager(array(
+      "Model" => $this->getObject(),
+      "name" => "image1"
+    ));
+  }
 }
