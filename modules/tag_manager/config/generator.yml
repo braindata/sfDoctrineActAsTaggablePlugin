@@ -23,7 +23,7 @@ generator:
         title: Tag List
         sort: [name, asc]
         display: [=name, is_featured, position, description]
-        max_per_page: 10
+        max_per_page: 50
         
       filter:  ~
       form:
