@@ -4,7 +4,32 @@
  */
 class PluginTagTable extends Doctrine_Table
 {
-    /**
+    public static function getTagNamesGroupByModelId(array $ids, $modelName)
+    {
+      $q = Doctrine_Query::create()
+        ->select('tg.taggable_id, t.name')
+        ->from('Tag t INDEXBY t.name, t.Tagging tg')
+        ->whereIn('tg.taggable_id', $ids)
+        ->addWhere('tg.taggable_model = ?', $modelName);
+
+      $modelTags = array();
+      foreach($q->execute(null, Doctrine::HYDRATE_ARRAY) as $tag) {
+        $name = $tag['name'];
+        foreach($tag['Tagging'] as $tagging) {
+          if(! isset($modelTags[$tagging['taggable_id']])) {
+            $modelTags[$tagging['taggable_id']] = array();
+          }
+
+          if(! in_array($name, $modelTags[$tagging['taggable_id']])) {
+            $modelTags[$tagging['taggable_id']][] = $name;
+          }
+        }
+      }
+
+      return $modelTags;
+    }
+
+   /**
     * Returns all tags, eventually with a limit option.
     * The first optionnal parameter permits to add some restrictions on the
     * objects the selected tags are related to.
