@@ -13,7 +13,7 @@ abstract class BasetagComponents extends sfComponents
   public function executePopularTags() {
     $q = Doctrine_Query::create()
       ->where('t.is_featured = 0')
-      ->limit(10);
+      ->limit(sfConfig::get('max_popular_tags_in_header', 10));
     $this->tags = PluginTagTable::getPopulars($q);
     arsort($this->tags);
 
