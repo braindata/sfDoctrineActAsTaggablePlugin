@@ -13,7 +13,7 @@ class PluginTagTable extends Doctrine_Table
         ->addWhere('tg.taggable_model = ?', $modelName);
 
       $modelTags = array();
-      foreach($q->execute(null, Doctrine::HYDRATE_ARRAY) as $tag) {
+      foreach($q->execute(null, Doctrine_Core::HYDRATE_ARRAY) as $tag) {
         $name = $tag['name'];
         foreach($tag['Tagging'] as $tagging) {
           if(! isset($modelTags[$tagging['taggable_id']])) {
@@ -86,8 +86,8 @@ class PluginTagTable extends Doctrine_Table
             $q->addWhere('t.triple_value = ?', $options['value']);
         }
         
-//        return array_keys($q->orderBy('t.name')->execute(array(), Doctrine::HYDRATE_ARRAY));
-        return array_keys($q->execute(array(), Doctrine::HYDRATE_ARRAY));
+//        return array_keys($q->orderBy('t.name')->execute(array(), Doctrine_Core::HYDRATE_ARRAY));
+        return array_keys($q->execute(array(), Doctrine_Core::HYDRATE_ARRAY));
     }
 
     /**
@@ -160,7 +160,7 @@ class PluginTagTable extends Doctrine_Table
           ->orderBy('t_count DESC, t.name ASC')
         ;
         
-        $rs = $q->execute(array(), Doctrine::HYDRATE_ARRAY);
+        $rs = $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
         
         $tags = array();
         
@@ -206,7 +206,7 @@ class PluginTagTable extends Doctrine_Table
                            ->whereIn('t.name', $tags)
                            ->having('count(t.id) >= ?', count($tags))
                            ->groupBy('tg.taggable_id')
-                           ->execute(array(), Doctrine::HYDRATE_ARRAY);
+                           ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
         
         foreach($q as $cc)
         {
@@ -283,7 +283,7 @@ class PluginTagTable extends Doctrine_Table
                                      ->where('tg.taggable_model = ?', $key)
                                      ->andWhereNotIn('t.name', $tags)
                                      ->andWhereIn('tg.taggable_id', $tagging)
-                                     ->execute(array(), Doctrine::HYDRATE_ARRAY);
+                                     ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
             
             foreach ($tags_rs as $tag)
             {
@@ -333,7 +333,7 @@ class PluginTagTable extends Doctrine_Table
                 $q->leftJoin($options['leftJoin']);
             }
             
-            $hydration = isset($options['hydrate']) ?  $options['hydrate'] : Doctrine::HYDRATE_RECORD;
+            $hydration = isset($options['hydrate']) ?  $options['hydrate'] : Doctrine_Core::HYDRATE_RECORD;
             
             $objects = $q->whereIn('t.id', $tagging)->execute(array(), $hydration);
 
@@ -460,7 +460,7 @@ class PluginTagTable extends Doctrine_Table
             $options['nb_common_tags'] = count($tags);
         }
         
-        $tag_ids = $q->execute(array(), Doctrine::HYDRATE_ARRAY);
+        $tag_ids = $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 
         // by JO: if no ids are found with given tags
         if (count($tag_ids) == 0)
@@ -489,7 +489,7 @@ class PluginTagTable extends Doctrine_Table
             $q->addSelect('tg.taggable_model')->addGroupBy('tg.taggable_model');
         }
 
-        $results = $q->execute(array(), Doctrine::HYDRATE_ARRAY);
+        $results = $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
         $taggings = array();
 
         foreach($results as $rs)
@@ -524,7 +524,7 @@ class PluginTagTable extends Doctrine_Table
     public static function findOrCreateByTagname($tagname)
     {
         // retrieve or create the tag
-        $tag = Doctrine::getTable('Tag')->findOneByName($tagname);
+        $tag = Doctrine_Core::getTable('Tag')->findOneByName($tagname);
 
         if (!$tag)
         {
@@ -549,7 +549,7 @@ class PluginTagTable extends Doctrine_Table
      * @return array
      */
     public static function purgeOrphans() {
-      $q = Doctrine::getTable('Tag')->createQuery('t INDEXBY t.id')
+      $q = Doctrine_Core::getTable('Tag')->createQuery('t INDEXBY t.id')
         ->select('t.id')
         ->addWhere('NOT EXISTS (SELECT tg.id FROM Tagging tg WHERE tg.tag_id = t.id)');
         

@@ -131,7 +131,7 @@ class TaggableToolkit
 
         if(is_string($model))
         {
-            $table = Doctrine::getTable($model);
+            $table = Doctrine_Core::getTable($model);
         }
 
         if(is_object($model))

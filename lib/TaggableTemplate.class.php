@@ -80,9 +80,9 @@ class TaggableListener extends Doctrine_Record_Listener
                 ->from('Tag t INDEXBY t.id')
                 ->whereIn('t.name', $removed_tags);
 								
-            $removed_tag_ids = array_keys($q->execute(array(), Doctrine::HYDRATE_ARRAY));
+            $removed_tag_ids = array_keys($q->execute(array(), Doctrine_Core::HYDRATE_ARRAY));
             
-            Doctrine::getTable('Tagging')->createQuery()
+            Doctrine_Core::getTable('Tagging')->createQuery()
 	            ->delete()
 	            ->whereIn('tag_id', $removed_tag_ids)
 	            ->addWhere('taggable_id = ?', $object->id)
@@ -107,7 +107,7 @@ class TaggableListener extends Doctrine_Record_Listener
       
         $object = $event->getInvoker();
         
-        Doctrine::getTable('Tagging')->createQuery()
+        Doctrine_Core::getTable('Tagging')->createQuery()
           ->delete()
           ->addWhere('taggable_id = ?', $object->id)
           ->addWhere('taggable_model = ?', get_class($object))
@@ -309,7 +309,7 @@ class Taggable extends Doctrine_Template
                   ->addWhere('tg.taggable_model = ?', get_class($this->getInvoker()))
                 ;
 
-                $saved_tags = $q->execute(array(), Doctrine::HYDRATE_ARRAY);
+                $saved_tags = $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
                 $tags = array();
                 
                 foreach ($saved_tags as $key => $infos)
