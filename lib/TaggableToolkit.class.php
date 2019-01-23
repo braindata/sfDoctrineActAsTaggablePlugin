@@ -124,7 +124,7 @@ class TaggableToolkit
     */
     public static function isTaggable($model)
     {
-        if(!Doctrine::isValidModelClass($model))
+        if(!Doctrine_Core::isValidModelClass($model))
         {
             throw new Exception(sprintf('%s is not a doctrine class...', $model));
         }
