@@ -6,3 +6,4 @@ tag_manager:
     prefix_path:          /tag_manager
     column:               id
     with_wildcard_routes: true
+    collection_actions:   { filter: [post, get], batch: [post, get] }
