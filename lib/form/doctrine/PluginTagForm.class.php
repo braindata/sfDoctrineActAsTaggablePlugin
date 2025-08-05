@@ -21,7 +21,7 @@ abstract class PluginTagForm extends BaseTagForm
       $this['triple_value']
     );
 
-    $this->widgetSchema['image1'] = new sfImageManager(array(
+    $this->widgetSchema['image1'] = new sfWidgetMediaSelector(array(
       "Model" => $this->getObject(),
       "name" => "image1"
     ));
