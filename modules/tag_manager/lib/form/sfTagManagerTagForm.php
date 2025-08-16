@@ -14,7 +14,11 @@ class sfTagManagerTagForm extends TagForm
       "name" => "image1"
     ));
 
-    $this->widgetSchema['description'] = new sfWidgetFormTextareaMyTinyMCE();
+    // Use Trix editor instead of TinyMCE for rich text editing
+    $this->widgetSchema['description'] = new sfWidgetFormTrixEditor(array(
+      'height' => '200px'
+    ));
+    $this->widgetSchema->setLabel('description', false);
 
     $this->validatorSchema['description']->setOption("max_length", null);
   }
