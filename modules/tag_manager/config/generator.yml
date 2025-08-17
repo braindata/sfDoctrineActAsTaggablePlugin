@@ -1,8 +1,8 @@
 generator:
-  class: sfDoctrineGenerator
+  class: bdModernDoctrineGenerator
   param:
     model_class:           tag
-    theme:                 jroller
+    theme:                 modern
     non_verbose_templates: true
     with_show:             false
     singular:              Tag
