@@ -21,6 +21,11 @@ abstract class PluginTagForm extends BaseTagForm
       $this['triple_value']
     );
 
+    // Unset the field from both widget and validator schemas
+    unset($this->widgetSchema['image1']);
+    unset($this->validatorSchema['image1']);
+    
+    // Add the special widget that handles its own data
     $this->widgetSchema['image1'] = new sfWidgetMediaSelector(array(
       "Model" => $this->getObject(),
       "name" => "image1"

@@ -23,4 +23,17 @@ class tag_managerActions extends autoTag_managerActions
     $this->redirect($url);
   }
 
+  protected function processForm(sfWebRequest $request, sfForm $form)
+  {
+    $values = $request->getParameter($form->getName());
+    
+    // Remove image1 field from submitted values since it's handled by widget
+    unset($values['image1']);
+    
+    // Update the request parameters
+    $request->setParameter($form->getName(), $values);
+    
+    return parent::processForm($request, $form);
+  }
+
 }
