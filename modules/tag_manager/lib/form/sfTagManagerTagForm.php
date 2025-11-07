@@ -14,8 +14,8 @@ class sfTagManagerTagForm extends TagForm
       "name" => "image1"
     ));
 
-    // Use Trix editor instead of TinyMCE for rich text editing
-    $this->widgetSchema['description'] = new sfWidgetFormTrixEditor(array(
+    // Use factory to get configured rich text editor
+    $this->widgetSchema['description'] = RichTextEditorFactory::create(array(
       'height' => '200px'
     ));
     $this->widgetSchema->setLabel('description', false);
